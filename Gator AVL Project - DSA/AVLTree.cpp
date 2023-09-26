@@ -1,6 +1,14 @@
 #include "AVLTree.h"
 
 
+AVLTree::AVLTree()
+{
+}
+
+AVLTree::~AVLTree()
+{
+}
+
 // Add a Student object into the tree with the specified name, NAME and GatorID number, ID
 void AVLTree::insert(std::string NAME, int ID)
 {
@@ -15,14 +23,14 @@ void AVLTree::remove(int ID)
 
 
 // Search for the student with the specified ID from the tree.
-void AVLTree::search(int ID)
+void AVLTree::searchID(int ID)
 {
     // TODO: Add your implementation code here.
 }
 
 
 // Search for the student with the specified name, NAME in the tree
-void AVLTree::searchName(std::string NAME)
+void AVLTree::searchNAME(std::string NAME)
 {
     // TODO: Add your implementation code here.
 }

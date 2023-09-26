@@ -2,6 +2,13 @@
 
 #include <string>
 
+/*
+    Meet the requirements for a Binary Search Tree (BST)
+    Be sorted by numerical GatorID, not lexical Name
+    Be sorted from least to greatest (nodes of lesser value are in the left subtree, nodes of greater value are in the right subtree)
+    Make appropriate use of public and private methods
+*/
+
 class AVLTree
 {
 public:
@@ -12,14 +19,17 @@ public:
 		Node* l_child;
 	};
 
+	AVLTree();
+	~AVLTree();
+
 	// Add a Student object into the tree with the specified name, NAME and GatorID number, ID
 	void insert(std::string NAME, int ID);
 	// Find and remove the account with the specified ID from the tree
 	void remove(int ID);
 	// Search for the student with the specified ID from the tree.
-	void search(int ID);
+	void searchID(int ID);
 	// Search for the student with the specified name, NAME in the tree
-	void searchName(std::string NAME);
+	void searchNAME(std::string NAME);
 	// Print out a comma separated inorder traversal of the names in the tree
 	void printInorder();
 	// Print out a comma separated preorder traversal of the names in the tree

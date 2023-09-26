@@ -8,6 +8,8 @@
 
 int main(){
 
+	AVLTree AVL;
+
 
 
 	return 0;
