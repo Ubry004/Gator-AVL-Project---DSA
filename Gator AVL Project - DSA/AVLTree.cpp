@@ -15,15 +15,18 @@ AVLTree::Node* AVLTree::HELPER_insert(Node* helpRoot, std::string name, int id)
 {
     // Check to make sure the ID is 8 digits
     if (std::to_string(abs(id)).length() > 8 || id < 0) {
-        std::cout << "unsuccessful insertion of " << name << " " << id << std::endl;
+        std::cout << "unsuccessful" << std::endl;
         return helpRoot;
     }
-    if (helpRoot == nullptr)
+    if (helpRoot == nullptr) {
         return new Node(name, id);
-    else if (id < helpRoot->ID)
+    }
+    else if (id < helpRoot->ID) {
         helpRoot->l_child = HELPER_insert(helpRoot->l_child, name, id);
-    else
+    }
+    else {
         helpRoot->r_child = HELPER_insert(helpRoot->r_child, name, id);
+    }
 
     //TODO: CHECK HEIGHT AND AUTO BALANCE
 
@@ -32,22 +35,62 @@ AVLTree::Node* AVLTree::HELPER_insert(Node* helpRoot, std::string name, int id)
 
 void AVLTree::HELPER_remove(Node* helpRoot, int id)
 {
-    // Check to make sure the ID is 8 digits
-    if (std::to_string(abs(id)).length() > 8 || id < 0) {
-        std::cout << "unsuccessful deletion of " << id << std::endl;
+    if (helpRoot == nullptr) {
+        std::cout << "unsuccessful" << std::endl;
+        return;
     }
 
-    if (helpRoot->ID == id) {
-        //TODO: correctly define deletion 
-        std::cout << "removed " << helpRoot->NAME << std::endl;
-        helpRoot = nullptr;
+    // Case 1: Node with given id has no children
+    if (helpRoot->l_child != nullptr && helpRoot->l_child->ID == id) {
+        if (helpRoot->l_child->l_child == nullptr && helpRoot->l_child->r_child == nullptr) {
+            helpRoot->l_child = nullptr;
+            return;
+        }
     }
-    else if (helpRoot == nullptr)
-        std::cout << "The tree is empty!" << std::endl;
-    else if (id < helpRoot->ID)
+    else if (helpRoot->r_child != nullptr && helpRoot->r_child->ID == id) {
+        if (helpRoot->r_child->l_child == nullptr && helpRoot->r_child->r_child == nullptr) {
+            helpRoot->r_child = nullptr;
+            return;
+        }
+    }
+    else if (id < helpRoot->ID) {
         HELPER_remove(helpRoot->l_child, id);
-    else
+    }
+    else {
         HELPER_remove(helpRoot->r_child, id);
+    }
+
+    // Case 2: Node with given id has 1 child
+    if (helpRoot->l_child != nullptr && helpRoot->l_child->ID == id) {
+        if (helpRoot->l_child->l_child != nullptr) {
+            helpRoot->l_child = helpRoot->l_child->l_child;
+            return;
+        }
+        else if (helpRoot->l_child->r_child != nullptr) {
+            helpRoot->l_child = helpRoot->l_child->r_child;
+            return;
+        }
+    }
+    else if (helpRoot->r_child != nullptr && helpRoot->r_child->ID == id) {
+        if (helpRoot->r_child->l_child != nullptr) {
+            helpRoot->r_child = helpRoot->r_child->l_child;
+            return;
+        }
+        else if (helpRoot->r_child->r_child != nullptr) {
+            helpRoot->r_child = helpRoot->r_child->r_child;
+            return;
+        }
+    }
+    else if (id < helpRoot->ID) {
+        HELPER_remove(helpRoot->l_child, id);
+    }
+    else {
+        HELPER_remove(helpRoot->r_child, id);
+    }
+
+    // Case 3: Node with given value as two children
+
+
 }
 
 void AVLTree::HELPER_searchID(int ID)
@@ -61,7 +104,7 @@ void AVLTree::HELPER_searchNAME(std::string NAME)
 void AVLTree::HELPER_printInorder(AVLTree::Node* helpRoot)
 {
     if (helpRoot == nullptr)
-        std::cout << "Sorry, nothing.";
+        std::cout << "unsuccessful";
     else
     {
         if (helpRoot->l_child != nullptr) HELPER_printInorder(helpRoot->l_child);
@@ -70,20 +113,38 @@ void AVLTree::HELPER_printInorder(AVLTree::Node* helpRoot)
     }
 }
 
-void AVLTree::HELPER_printPreorder()
+void AVLTree::HELPER_printPreorder(AVLTree::Node* helpRoot)
 {
+    if (helpRoot == nullptr)
+        std::cout << "unsuccessful";
+    else
+    {
+        std::cout << helpRoot->NAME << " " << helpRoot->ID << std::endl;
+        if (helpRoot->l_child != nullptr) HELPER_printPreorder(helpRoot->l_child);
+        if (helpRoot->r_child != nullptr) HELPER_printPreorder(helpRoot->r_child);
+    }
 }
 
-void AVLTree::HELPER_printPostorder()
+void AVLTree::HELPER_printPostorder(AVLTree::Node* helpRoot)
 {
+    if (helpRoot == nullptr)
+        std::cout << "unsuccessful";
+    else
+    {
+        if (helpRoot->l_child != nullptr) HELPER_printPostorder(helpRoot->l_child);
+        if (helpRoot->r_child != nullptr) HELPER_printPostorder(helpRoot->r_child);
+        std::cout << helpRoot->NAME << " " << helpRoot->ID << std::endl;
+    }
 }
 
 void AVLTree::HELPER_printLevelCount()
 {
+
 }
 
 void AVLTree::HELPER_removeInorderN(int n)
 {
+
 }
 
 // ---------------------------------------------------------------------------------
@@ -130,6 +191,7 @@ void AVLTree::printInorder()
 void AVLTree::printPreorder()
 {
     // TODO: Add your implementation code here.
+    HELPER_printPreorder(root);
 }
 
 
@@ -137,6 +199,7 @@ void AVLTree::printPreorder()
 void AVLTree::printPostorder()
 {
     // TODO: Add your implementation code here.
+    HELPER_printPostorder(root);
 }
 
 

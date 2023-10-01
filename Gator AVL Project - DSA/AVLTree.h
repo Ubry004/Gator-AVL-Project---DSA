@@ -16,7 +16,7 @@ private:
 	struct Node {
 		Node(std::string name, int id) { NAME = name; ID = id; };
 		//TODO: swap uint with string for ID storage
-		unsigned int ID;
+		int ID;
 		std::string NAME;
 		unsigned int height;
 		Node* r_child = nullptr;
@@ -36,9 +36,9 @@ private:
 	// Print out a comma separated inorder traversal of the names in the tree
 	void HELPER_printInorder(Node* helpRoot);
 	// Print out a comma separated preorder traversal of the names in the tree
-	void HELPER_printPreorder();
+	void HELPER_printPreorder(Node* helpRoot);
 	// Print out a comma separated postorder traversal of the names in the tree
-	void HELPER_printPostorder();
+	void HELPER_printPostorder(Node* helpRoot);
 	// Prints the number of levels that exist in the tree
 	void HELPER_printLevelCount();
 	// Remove the Nth GatorID from the inorder traversal of the tree (N = 0 for the first item, etc)
