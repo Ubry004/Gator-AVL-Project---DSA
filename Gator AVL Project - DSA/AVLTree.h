@@ -40,6 +40,18 @@ private:
 		node->height = (hl > hr ? hl : hr) + 1;	// largest height among children + 1
 	}
 
+	Node* minval(Node* node) {
+		return node->l_child ? minval(node->l_child) : node;	//runs until it hits a nullptr
+	}
+
+	Node* removeminval(Node* node) // deleting the node with the minimal key from p tree 
+	{
+		if (node->l_child == nullptr)
+			return node->r_child;
+		node->l_child= removeminval(node->l_child);
+		return balance(node);
+	}
+
 	// Rotations
 
 	Node* rotateright (Node* parent) {

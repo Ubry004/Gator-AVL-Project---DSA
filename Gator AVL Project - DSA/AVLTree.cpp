@@ -50,29 +50,32 @@ AVLTree::Node* AVLTree::HELPER_remove(Node* helpRoot, std::string id)
         // Case 1: No children
         if (helpRoot->l_child == nullptr && helpRoot->r_child == nullptr) {
             helpRoot = nullptr;
-            //return nullptr;
+            return nullptr;
         }
         // Case 2: 1 child
         else if (helpRoot->l_child == nullptr || helpRoot->r_child == nullptr) {
             helpRoot = helpRoot->l_child ? helpRoot->l_child : helpRoot->r_child;
+            return balance(helpRoot);
         }
         // Case 3: 2 children
         else {
             // Prioritize inorder successor
             // Find min value in right subtree
-            AVLTree::Node* temp = helpRoot->r_child;
-            while (temp->l_child != nullptr) {
-                temp = temp->l_child;
-            }
-            helpRoot = temp;
-            //delete temp;
+            AVLTree::Node* lc = helpRoot->l_child;
+            AVLTree::Node* rc = helpRoot->r_child;
+            delete helpRoot;
+            if (rc == nullptr) return lc;
+            AVLTree::Node* IOPredecessor = minval(rc);
+            IOPredecessor->r_child = removeminval(rc);
+            IOPredecessor->l_child = lc;
+            return balance(IOPredecessor);
         }
     }
 
-    if (helpRoot == nullptr) {
-        std::cout << "somehow nullptr, quitting..." << std::endl;
-        return nullptr;
-    }
+    //if (helpRoot == nullptr) {
+    //    std::cout << "somehow nullptr, quitting..." << std::endl;
+    //    return nullptr;
+    //}
     return balance(helpRoot);   // Balance on the way out
 }
 
