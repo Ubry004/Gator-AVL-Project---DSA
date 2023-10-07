@@ -89,15 +89,14 @@ private:
 		return node; // already balanced
 	}
 
-
 	// Add a Student object into the tree with the specified name, NAME and GatorID number, ID
 	Node* HELPER_insert(Node* helpRoot, std::string name, std::string id);
 	// Find and remove the account with the specified ID from the tree
 	Node* HELPER_remove(Node* helpRoot, std::string ID);
 	// Search for the student with the specified ID from the tree.
-	void HELPER_searchID(Node* helpRoot, std::string ID);
+	bool HELPER_searchID(Node* helpRoot, std::string ID);
 	// Search for the student with the specified name, NAME in the tree
-	void HELPER_searchNAME(Node* helpRoot, std::string NAME);
+	bool HELPER_searchNAME(Node* helpRoot, std::string NAME);
 	// Print out a comma separated inorder traversal of the names in the tree
 	void HELPER_printInorder(Node* helpRoot);
 	// Print out a comma separated preorder traversal of the names in the tree
@@ -105,7 +104,7 @@ private:
 	// Print out a comma separated postorder traversal of the names in the tree
 	void HELPER_printPostorder(Node* helpRoot);
 	// Prints the number of levels that exist in the tree
-	void HELPER_printLevelCount();
+	void HELPER_printLevelCount(Node* helpRoot);
 	// Remove the Nth GatorID from the inorder traversal of the tree (N = 0 for the first item, etc)
 	void HELPER_removeInorderN(Node* helpRoot, int n);
 

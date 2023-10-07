@@ -72,35 +72,36 @@ AVLTree::Node* AVLTree::HELPER_remove(Node* helpRoot, std::string id)
         }
     }
 
-    //if (helpRoot == nullptr) {
-    //    std::cout << "somehow nullptr, quitting..." << std::endl;
-    //    return nullptr;
-    //}
+    if (helpRoot == nullptr) {
+        std::cout << "somehow nullptr, quitting..." << std::endl;
+        return nullptr;
+    }
     return balance(helpRoot);   // Balance on the way out
 }
 
-void AVLTree::HELPER_searchID(AVLTree::Node* helpRoot, std::string id)
+bool AVLTree::HELPER_searchID(AVLTree::Node* helpRoot, std::string id)
 {
     if (helpRoot == nullptr) {
-        std::cout << "unsuccessful";
+        return false;
     }
     else if (helpRoot->ID == id) {
         std::cout << helpRoot->NAME << std::endl;
+        return true;
     } 
     else {
-        if (helpRoot->l_child != nullptr && helpRoot->ID != id) HELPER_searchID(helpRoot->l_child, id);
-        if (helpRoot->r_child != nullptr && helpRoot->ID != id) HELPER_searchID(helpRoot->r_child, id);
+        if (helpRoot->l_child != nullptr) HELPER_searchID(helpRoot->l_child, id);
+        if (helpRoot->r_child != nullptr) HELPER_searchID(helpRoot->r_child, id);
     }
 }
 
-void AVLTree::HELPER_searchNAME(AVLTree::Node* helpRoot, std::string name)
+bool AVLTree::HELPER_searchNAME(AVLTree::Node* helpRoot, std::string name)
 {
     if (helpRoot == nullptr) {
-        std::cout << "unsuccessful";
+        return false;
     }
     else if (helpRoot->NAME == name) {
         std::cout << helpRoot->ID << std::endl;
-        return;
+        return true;
     }
     else {
         if (helpRoot->l_child != nullptr) HELPER_searchNAME(helpRoot->l_child, name);
@@ -144,25 +145,31 @@ void AVLTree::HELPER_printPostorder(AVLTree::Node* helpRoot)
     }
 }
 
-void AVLTree::HELPER_printLevelCount()
+void AVLTree::HELPER_printLevelCount(AVLTree::Node* helpRoot)
 {
+    if (helpRoot == nullptr) {
+        std::cout << "0" << std::endl;
+    }
+    else {
+        std::cout << (height(helpRoot->l_child) > height(helpRoot->r_child) ? height(helpRoot->l_child) : height(helpRoot->r_child)) + 1 << std::endl;
+    }
 
 }
 
+int counter = 0;
 void AVLTree::HELPER_removeInorderN(Node* helpRoot, int n)
 {
-    int counter = 0;
-    while (counter != n) {
-        if (helpRoot == nullptr) {
-            std::cout << "unsuccessful";
-            return;
-        } else {
-            if (helpRoot->l_child != nullptr) HELPER_removeInorderN(helpRoot->l_child, n);
-            
-        }
+    if (helpRoot == nullptr || counter > n) return;
+
+    HELPER_removeInorderN(helpRoot->l_child, n);
+    counter++;
+    if (counter == n) {
+        std::cout << "\nNth Node: " << helpRoot->NAME << std::endl;
+        remove(helpRoot->ID);
+        return;
     }
-    //std::cout << "Current Node: " << helpRoot->NAME << std::endl;
-    remove(helpRoot->ID);
+    HELPER_removeInorderN(helpRoot->r_child, n);
+
     return;
 }
 
@@ -188,17 +195,19 @@ void AVLTree::remove(std::string ID)
 void AVLTree::searchID(std::string ID)
 {
     // TODO: Add your implementation code here.
-    HELPER_searchID(root, ID);
+    if (HELPER_searchID(root, ID) == false) {
+        std::cout << "unsuccessful" << std::endl;
+    }
 }
-
 
 // Search for the student with the specified name, NAME in the tree
 void AVLTree::searchNAME(std::string NAME)
 {
     // TODO: Add your implementation code here.
-    HELPER_searchNAME(root, NAME);
+    if (HELPER_searchNAME(root, NAME) == false) {
+        std::cout << "unsuccessful" << std::endl;
+    }
 }
-
 
 // Print out a comma separated inorder traversal of the names in the tree
 void AVLTree::printInorder()
@@ -228,6 +237,7 @@ void AVLTree::printPostorder()
 void AVLTree::printLevelCount()
 {
     // TODO: Add your implementation code here.
+    HELPER_printLevelCount(root);
 }
 
 
@@ -236,5 +246,4 @@ void AVLTree::removeInorderN(int n)
 {
     // TODO: Add your implementation code here.
     HELPER_removeInorderN(root, n);
-
 }

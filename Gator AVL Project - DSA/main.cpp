@@ -136,25 +136,33 @@ int main(){
 	AVL.searchID("23234567");
 	std::cout << "Luigi NAME:" << std::endl;
 	AVL.searchNAME("Luigi");
-	std::cout << "Kefka:" << std::endl;
+	std::cout << "Tron Bonne ID:" << std::endl;
+	AVL.searchID("67482093");
+	std::cout << "Kefka NAME:" << std::endl;
 	AVL.searchNAME("Kefka Palooza");
 
 	//Inorder Removal
-	//AVL.removeInorderN(0);
+	AVL.removeInorderN(5);
+
+	std::cout << std::endl;
+
+	//Level count
+	AVL.printLevelCount();
 
 	//Currently throwing an exception because l_child is nullptr
-	std::cout << "\nRemoving Link, Cloud, Tifa, and Samus... " << std::endl;
+	std::cout << "\nRemoving Link, Cloud, Tifa, Samus, and Mario(again)... " << std::endl;
 	AVL.remove("34567890");
 	AVL.remove("21234567");
 	AVL.remove("23234567");
 	AVL.remove("56789012");
+	AVL.remove("12345678");
 
 	std::cout << "\nInorder: " << std::endl;
 	AVL.printInorder();
-	/*std::cout << "\nPreorder: " << std::endl;
-	AVL.printPreorder();
-	std::cout << "\nPostorder: " << std::endl; 
-	AVL.printPostorder();*/
+	//std::cout << "\nPreorder: " << std::endl;
+	//AVL.printPreorder();
+	//std::cout << "\nPostorder: " << std::endl; 
+	//AVL.printPostorder();
 
 	return 0;
 }
